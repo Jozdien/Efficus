@@ -2,14 +2,37 @@ import json
 from collections import OrderedDict
 
 f = open("words_unformatted.txt", "r")
-dict_ntw = {"0": ".", "1": ",", "10": "'", "11": "\"", "110110": "0", "110111": "1", "111000": "2", "111001": "3", "111010": "4", "111011": "5", "111100": "6", "111101": "7", "111110": "8", "111111": "9", "1000000": "(", "1000001": ")", "1000010": "+", "1000011": "-", "1000100": "*", "1000101": ";", "1000110": ":", "1000111": "!", "1001000": "$", "1001001": "%", "1001010": "&", "1001011": "/"}
+dict_ntw = {}
 dict_wtn = {}
-#TODO: Fill out the remaining bits with that many digits in the JSON with numbers
+first_tier = ['.', ',', '\'', '\"']
+second_tier = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '(', ')', '+', '-', '*', ';', ':', "!", "$", "%", "&", "/"]
+offset = 0
+number = 10
 
+for i in first_tier:
+	no = str(bin(offset)[2:])
+	dict_ntw[no] = i
+	dict_wtn[i] = no
+	offset = offset + 1
 for i in f:
 	temp = i.split()[:2]
-	dict_ntw[str(bin(int(temp[0]))[2:])] = temp[1]
-	dict_wtn[temp[1]] = str(bin(int(temp[0]))[2:])
+	no = str(bin(offset)[2:])
+	if(no == "1000000"):
+		for j in second_tier:
+			no = str(bin(offset)[2:])
+			dict_ntw[no] = j
+			dict_wtn[j] = no
+			offset = offset + 1
+	dict_ntw[no] = temp[1]
+	dict_wtn[temp[1]] = no
+	offset = offset + 1
+while str(bin(offset)[2:]) != "1111111110000000":
+	no = str(bin(offset)[2:])
+	dict_ntw[no] = str(number)
+	dict_wtn[str(number)] = no
+	number = number + 1
+	offset = offset + 1
+
 f.close()
 
 json_ntw = json.dumps(OrderedDict(sorted(dict_ntw.items(), key=lambda kv: int(kv[0]))), indent = 4)
