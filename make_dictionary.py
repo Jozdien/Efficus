@@ -4,8 +4,9 @@ from collections import OrderedDict
 f = open("words_unformatted.txt", "r")
 dict_ntw = {}
 dict_wtn = {}
-first_tier = ['.', ',', '\'', '\"']
-second_tier = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '(', ')', '+', '-', '*', ';', ':', "!", "$", "%", "&", "/"]
+first_tier = ['', '.', ',', '?', '\'', '\"']
+second_tier = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',  
+				'(', ')', '+', '-', '*', ';', ':', "!", "$", "%", "&", "/"]
 offset = 0
 number = 10
 
@@ -15,6 +16,7 @@ for i in first_tier:
 	dict_wtn[i] = no
 	offset = offset + 1
 for i in f:
+	i = i.lower()
 	temp = i.split()[:2]
 	no = str(bin(offset)[2:])
 	if(no == "1000000"):
