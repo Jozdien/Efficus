@@ -17,7 +17,10 @@ Then we mash 'em.
 
 ## Sample
 
-Pride and Prejudice by Jane Austen:
+### Pride and Prejudice by Jane Austen:
+
 Original length: 685570
+
 Compressed length: 130374
+
 Compression Factor: 0.190168764678
