@@ -60,12 +60,13 @@ def separate(s):
 	return arr
 
 f = open("book.txt", 'rw')
-original = f.read()[:10000].decode("utf-8").replace(u'\xe2\x80\x9d', '"').encode("utf-8")
+original = f.read().decode("utf-8").replace(u'\xe2\x80\x9d', '"').encode("utf-8")
 original = (original.lower()).replace('\n', " ")
 words = separate(original)[:-1]
 final = ""
 no = 65408
 counter = 0
+new_words = 0
 original_length = len(original) * 1.0
 
 with open('dictionary_wtn.json', 'r') as openfile: 
@@ -74,7 +75,6 @@ with open('dictionary_ntw.json', 'r') as openfile:
 	dictionary_ntw = json.load(openfile)
 
 for i in words:
-	print(i)
 	if(unicode(i, 'utf-8').isnumeric()):
 		if(int(i) > 24107):
 			for j in range(0, len(i), 4):
@@ -91,6 +91,7 @@ for i in words:
 		if(i in dictionary_wtn):
 			final = final + dictionary_wtn[i]
 		else:
+			new_words = new_words + 1
 			dictionary_ntw[str(bin(no)[2:])] = i
 			dictionary_wtn[i] = str(bin(no)[2:])
 			no = no + 1
@@ -101,6 +102,7 @@ final = final[:-1]
 compressed_length = math.ceil(len(final) / 8.0)
 compression_factor = compressed_length / original_length
 
+#print(new_words)
 #print final
 print "Original length:",original_length
 print "Compressed length:",compressed_length
