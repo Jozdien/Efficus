@@ -23,4 +23,4 @@ Original length: 685570
 
 Compressed length: 130374
 
-Compression Factor: 0.190168764678
+Compression Factor: 5.258487121653405
