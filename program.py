@@ -61,7 +61,7 @@ def separate(s):
 	return arr
 
 f = open("book.txt", 'rw')
-original = f.read().decode("utf-8").replace(u'\xe2\x80\x9d', '"').encode("utf-8")
+original = f.read()
 original = (original.lower()).replace('\n', " ")
 words = separate(original)[:-1]
 final = ""
@@ -82,7 +82,11 @@ for a in range(10):
 		if(unicode(i, 'utf-8').isnumeric()):
 			if(int(i) > 24107):
 				for j in range(0, len(i), 4):
-					final = final + dictionary_wtn[i[j:j+4]]
+					if i[j] == "0":
+						for k in i:
+							final = final + dictionary_wtn[k]
+					else: 
+						final = final + dictionary_wtn[i[j:j+4]]
 			elif i[0] == "0":
 				for j in i:
 					final = final + dictionary_wtn[j]
@@ -107,7 +111,7 @@ for a in range(10):
 	output_file.write(final)
 
 	compressed_length = math.ceil(len(final) / 8.0)
-	compression_factor = compressed_length / original_length
+	compression_factor = original_length / compressed_length
 
 	#print(new_words)
 	#print final
