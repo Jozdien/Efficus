@@ -2,6 +2,11 @@ import json
 import math
 import time
 
+'''
+This function's purpose is to extract the individual words, while accounting for the problems posed by punctuations: 
+"I'm" is extracted as a single word, but the sentence "He said, "I'm a sentence"." is split into 9 words - ["He", "said", ",", """, "I'm", "a", "sentence", """, "."]
+as "I'm" would be recognizable as a word in a dictionary, but "said," would not be, unless the dictionary was much more massive.
+'''
 def separate(s):
 	s_arr = s.split(' ')
 	arr = []
@@ -65,7 +70,7 @@ original = f.read()
 original = (original.lower()).replace('\n', " ")
 words = separate(original)[:-1]
 final = ""
-no = 65408
+no = 65408  # This is the integer number for the bit position at which unique words can be added.
 counter = 0
 new_words = 0
 original_length = len(original) * 8.0
@@ -80,7 +85,7 @@ for a in range(10):
 	new_time = time.time()
 	for i in words:
 		if(unicode(i, 'utf-8').isnumeric()):
-			if(int(i) > 24107):
+			if(int(i) > 24107):  # The limit of the numbers directly stored in the dictionary
 				for j in range(0, len(i), 4):
 					if i[j] == "0":
 						for k in i:
