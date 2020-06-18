@@ -23,4 +23,8 @@ Original length: 685570
 
 Compressed length: 130374
 
-Compression Factor: 5.258487121653405
+Compression Factor: 5.258487
+
+Average Compression Time: 39.1295759916 seconds
+
+Compression Time per byte: 0.05707597472409819 milliseconds

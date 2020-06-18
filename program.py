@@ -1,5 +1,6 @@
 import json
 import math
+import time
 
 def separate(s):
 	s_arr = s.split(' ')
@@ -68,42 +69,52 @@ no = 65408
 counter = 0
 new_words = 0
 original_length = len(original) * 1.0
+start_time = time.time()
 
 with open('dictionary_wtn.json', 'r') as openfile: 
     dictionary_wtn = json.load(openfile)
 with open('dictionary_ntw.json', 'r') as openfile:
 	dictionary_ntw = json.load(openfile)
 
-for i in words:
-	if(unicode(i, 'utf-8').isnumeric()):
-		if(int(i) > 24107):
-			for j in range(0, len(i), 4):
-				final = final + dictionary_wtn[i[j:j+4]]
-		elif i[0] == "0":
-			for j in i:
-				final = final + dictionary_wtn[j]
-		elif len(i) == 2:
-			for j in i:
-				final = final + dictionary_wtn[j]
+for a in range(10):
+	new_time = time.time()
+	for i in words:
+		if(unicode(i, 'utf-8').isnumeric()):
+			if(int(i) > 24107):
+				for j in range(0, len(i), 4):
+					final = final + dictionary_wtn[i[j:j+4]]
+			elif i[0] == "0":
+				for j in i:
+					final = final + dictionary_wtn[j]
+			elif len(i) == 2:
+				for j in i:
+					final = final + dictionary_wtn[j]
+			else:
+				final = final + dictionary_wtn[i]
 		else:
-			final = final + dictionary_wtn[i]
-	else:
-		if(i in dictionary_wtn):
-			final = final + dictionary_wtn[i]
-		else:
-			new_words = new_words + 1
-			dictionary_ntw[str(bin(no)[2:])] = i
-			dictionary_wtn[i] = str(bin(no)[2:])
-			no = no + 1
-			final = final + dictionary_wtn[i]
-	counter = counter + 1
-final = final[:-1]
+			if(i in dictionary_wtn):
+				final = final + dictionary_wtn[i]
+			else:
+				new_words = new_words + 1
+				dictionary_ntw[str(bin(no)[2:])] = i
+				dictionary_wtn[i] = str(bin(no)[2:])
+				no = no + 1
+				final = final + dictionary_wtn[i]
+		counter = counter + 1
+	final = final[:-1]
 
-compressed_length = math.ceil(len(final) / 8.0)
-compression_factor = compressed_length / original_length
+	output_file = open('compressed.txt', 'w+')
+	output_file.write(final)
 
-#print(new_words)
-#print final
-print "Original length:",original_length
-print "Compressed length:",compressed_length
-print "Compression Factor:",compression_factor
+	compressed_length = math.ceil(len(final) / 8.0)
+	compression_factor = compressed_length / original_length
+
+	#print(new_words)
+	#print final
+	print "Original length:",original_length
+	print "Compressed length:",compressed_length
+	print "Compression Factor:",compression_factor
+	print "Time:",(time.time() - new_time)
+	final = ""
+
+print "Average Compression Time:",(time.time() - start_time)/10
