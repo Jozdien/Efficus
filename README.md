@@ -21,10 +21,10 @@ Then we mash 'em.
 
 ### Pride and Prejudice by Jane Austen:
 
-Original length: 685570
+Original length in bits: 5484560
 
-Compressed length: 130374
+Compressed length in bits: 1042991
 
-Compression Factor: 5.258487
+Compression Factor: 5.258492
 
 Average Compression Time per byte: 57075.97473 ns

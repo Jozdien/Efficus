@@ -68,7 +68,7 @@ final = ""
 no = 65408
 counter = 0
 new_words = 0
-original_length = len(original) * 1.0
+original_length = len(original) * 8.0
 start_time = time.time()
 
 with open('dictionary_wtn.json', 'r') as openfile: 
@@ -110,7 +110,7 @@ for a in range(10):
 	output_file = open('compressed.txt', 'w+')
 	output_file.write(final)
 
-	compressed_length = math.ceil(len(final) / 8.0)
+	compressed_length = len(final)
 	compression_factor = original_length / compressed_length
 
 	#print(new_words)
